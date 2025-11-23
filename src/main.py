@@ -8,19 +8,14 @@ threads = list()
 q = queue.Queue()
 
 
-def conversion_mp4(
+def conversion(
     input_path,
     output_path,
     video_codec="libx264",
     pixel_format="yuv420p",
     extra_args=None
 ):
-    """
-    Converte vídeo para MP4 mantendo padrões,
-    mas permitindo personalização.
-
-    extra_args: lista opcional de argumentos adicionais do ffmpeg
-    """
+  
     command = [
         "ffmpeg",
         "-i", input_path,
@@ -28,11 +23,9 @@ def conversion_mp4(
         "-pix_fmt", pixel_format,
     ]
 
-    # adiciona argumentos extras, se existirem
     if extra_args:
         command.extend(extra_args)
 
-    # saída no final do comando
     command.append(output_path)
 
     return command
@@ -41,8 +34,15 @@ def conversion_mp4(
 def worker():
     output_path = "/videosmp4"
     files = glob.glob("/videos")
-    
-    conversion_mp4("/videos",output_path)
+
+    extra_args = input(str("Do you wanna modify the standard comand: [Y/N]"))
+    if extra_args == "Y" or "y" or "yes" or "Yes" or "YES":
+        video_codec = input("Video codec: ")
+        pixel_format = input("Pixel format: ")
+        conversion_mp4(files,output_path,video_codec,pixel_format)
+
+    else:
+        conversion_mp4(files,output_path)
 
 
 if __name__ == "__main__":
@@ -56,7 +56,6 @@ if __name__ == "__main__":
         threads.append(x)
         x.start()
     
-
     for index, thread in enumerate(threads):
         logging.info("Main    : before joining thread %d.", index)
         thread.join()
