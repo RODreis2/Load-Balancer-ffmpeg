@@ -6,7 +6,7 @@ import glob
 
 threads = list()
 q = queue.Queue()
-output_path = "/videosmp4"
+output_path = "./videosmp4"
 video_codec="libx264"
 pixel_format="yuv420p"
 
@@ -62,7 +62,7 @@ if __name__ == "__main__":
         video_codec = input("Write your video codec parameter: ")
         pixel_format = input("Write your pixel format parameter: ")
 
-    for file in glob.glob("/videos/*"):
+    for file in glob.glob("./videos/*"):
         q.put(file)
 
     for index in range(3):
