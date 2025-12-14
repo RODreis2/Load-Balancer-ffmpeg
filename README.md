@@ -1,11 +1,10 @@
---FFmpeg Local Task Load Balancer (Thread-Based)
+## FFmpeg Local Task Load Balancer (Thread-Based)
 
 This project is a local task dispatcher and load balancer for FFmpeg jobs, implemented in Python using threads and a task queue.
-Its main goal is to process multiple video encoding tasks concurrently, distributing them across a fixed number of worker threads while maintaining a simple and predictable architecture.
+Its main goal is to process multiple video re-encoding tasks concurrently, distributing them across a fixed number of worker threads while maintaining a simple and predictable architecture.
 
 
-
---Project Purpose
+## Project Purpose
 
 - The objective of this project is learning-oriented, focusing on:
 
@@ -21,30 +20,20 @@ Its main goal is to process multiple video encoding tasks concurrently, distribu
 
 - This is a local system, not distributed, by design.
 
-
-
---High-Level Architecture
+## High-Level Architecture
 
 The system is composed of four main components:
 
-[File Producer]
-      ↓
-[Task Queue]
-      ↓
-[Worker Threads]
-      ↓
-[FFmpeg Subprocess]
+[File Producer] -> [Task Queue] -> [Worker Threads] -> [FFmpeg Subprocess]
 
-Component Responsibilities
-
-Producer (Main Thread)
+* Producer (Main Thread)
 Discovers input video files and pushes them into a shared queue.
 
-Task Queue (queue.Queue)
+* Task Queue (queue.Queue)
 Acts as a synchronization-safe buffer between the producer and worker threads.
 
-Worker Threads
+* Worker Threads
 Consume tasks from the queue and execute FFmpeg commands.
 
-FFmpeg Subprocess
+* FFmpeg Subprocess
 Performs the actual video conversion.
